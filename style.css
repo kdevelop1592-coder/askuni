@@ -447,6 +447,163 @@ body::before {
     font-family: 'Fira Code', monospace;
 }
 
+/* Sentence Conversion Section */
+.sentence-section {
+    margin-bottom: var(--spacing-lg);
+    animation: fadeInUp 0.6s ease 0.35s both;
+}
+
+.sentence-input-wrapper {
+    position: relative;
+    margin-bottom: var(--spacing-md);
+}
+
+.sentence-input {
+    width: 100%;
+    padding: var(--spacing-md);
+    font-size: 1rem;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: 'Noto Sans KR', sans-serif;
+    resize: vertical;
+    min-height: 80px;
+    transition: all var(--transition-normal);
+    outline: none;
+}
+
+.sentence-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+}
+
+.char-count {
+    position: absolute;
+    bottom: var(--spacing-xs);
+    right: var(--spacing-md);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    pointer-events: none;
+}
+
+.conversion-modes {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.mode-btn {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-weight: 500;
+}
+
+.mode-btn:hover {
+    border-color: #667eea;
+    color: var(--text-primary);
+    transform: translateY(-2px);
+}
+
+.mode-btn.active {
+    background: var(--primary-gradient);
+    border-color: transparent;
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.sentence-result {
+    min-height: 200px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    overflow-x: auto;
+}
+
+.sentence-result.has-content {
+    display: block;
+}
+
+.code-output {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    word-break: break-all;
+}
+
+.code-char {
+    display: inline-block;
+    margin: 4px;
+    padding: 8px 12px;
+    background: rgba(102, 126, 234, 0.1);
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.code-char:hover {
+    background: rgba(102, 126, 234, 0.2);
+    border-color: rgba(102, 126, 234, 0.5);
+    transform: scale(1.05);
+}
+
+.char-visual {
+    display: block;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.char-code {
+    display: block;
+    font-size: 0.85rem;
+    color: #43e97b;
+    font-family: 'Fira Code', monospace;
+}
+
+.result-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+}
+
+.action-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-weight: 500;
+}
+
+.action-btn:hover {
+    background: var(--primary-gradient);
+    border-color: transparent;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-icon {
+    font-size: 1.2rem;
+}
+
 /* Education Section */
 .education-section {
     margin-bottom: var(--spacing-lg);

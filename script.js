@@ -15,6 +15,17 @@ const modalClose = document.querySelector('.modal-close');
 const exampleBtns = document.querySelectorAll('.example-btn');
 const infoBadges = document.querySelectorAll('.info-badge');
 
+// Sentence conversion elements
+const sentenceInput = document.getElementById('sentenceInput');
+const charCount = document.getElementById('charCount');
+const sentenceResult = document.getElementById('sentenceResult');
+const modeBtns = document.querySelectorAll('.mode-btn');
+const copyBtn = document.getElementById('copyBtn');
+const clearSentenceBtn = document.getElementById('clearSentenceBtn');
+const resultActions = document.querySelector('.result-actions');
+
+let currentMode = 'unicode';
+
 // Event Listeners
 charInput.addEventListener('input', handleInput);
 clearBtn.addEventListener('click', clearInput);
@@ -37,6 +48,23 @@ infoBadges.forEach(badge => {
         showInfoModal(infoType);
     });
 });
+
+// Sentence conversion event listeners
+sentenceInput.addEventListener('input', handleSentenceInput);
+
+modeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        currentMode = btn.getAttribute('data-mode');
+        modeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if (sentenceInput.value.trim()) {
+            convertSentence(sentenceInput.value);
+        }
+    });
+});
+
+copyBtn.addEventListener('click', copyToClipboard);
+clearSentenceBtn.addEventListener('click', clearSentence);
 
 // Main Input Handler
 function handleInput() {
@@ -292,6 +320,172 @@ function showInfoModal(type) {
 // Close Modal
 function closeModal() {
     infoModal.classList.remove('visible');
+}
+
+// Sentence Conversion Functions
+function handleSentenceInput() {
+    const text = sentenceInput.value;
+    const count = text.length;
+    charCount.textContent = count;
+
+    if (count > 0) {
+        convertSentence(text);
+        resultActions.style.display = 'flex';
+    } else {
+        clearSentenceResult();
+        resultActions.style.display = 'none';
+    }
+}
+
+function convertSentence(text) {
+    let output = '';
+
+    switch (currentMode) {
+        case 'unicode':
+            output = convertToUnicode(text);
+            break;
+        case 'ascii':
+            output = convertToASCII(text);
+            break;
+        case 'hex':
+            output = convertToHex(text);
+            break;
+        case 'binary':
+            output = convertToBinary(text);
+            break;
+    }
+
+    sentenceResult.innerHTML = output;
+    sentenceResult.classList.add('has-content');
+}
+
+function convertToUnicode(text) {
+    let html = '<div class="code-output">';
+
+    for (let char of text) {
+        const codePoint = char.codePointAt(0);
+        const unicodeStr = 'U+' + codePoint.toString(16).toUpperCase().padStart(4, '0');
+
+        html += `
+            <div class="code-char">
+                <span class="char-visual">${escapeHtml(char)}</span>
+                <span class="char-code">${unicodeStr}</span>
+            </div>
+        `;
+    }
+
+    html += '</div>';
+    return html;
+}
+
+function convertToASCII(text) {
+    let html = '<div class="code-output">';
+
+    for (let char of text) {
+        const codePoint = char.codePointAt(0);
+        const isAscii = codePoint <= 127;
+
+        html += `
+            <div class="code-char">
+                <span class="char-visual">${escapeHtml(char)}</span>
+                <span class="char-code">${isAscii ? codePoint : '❌'}</span>
+            </div>
+        `;
+    }
+
+    html += '</div>';
+    return html;
+}
+
+function convertToHex(text) {
+    let html = '<div class="code-output">';
+
+    for (let char of text) {
+        const codePoint = char.codePointAt(0);
+        const hexStr = '0x' + codePoint.toString(16).toUpperCase().padStart(4, '0');
+
+        html += `
+            <div class="code-char">
+                <span class="char-visual">${escapeHtml(char)}</span>
+                <span class="char-code">${hexStr}</span>
+            </div>
+        `;
+    }
+
+    html += '</div>';
+    return html;
+}
+
+function convertToBinary(text) {
+    let html = '<div class="code-output">';
+
+    for (let char of text) {
+        const codePoint = char.codePointAt(0);
+        const binaryStr = codePoint.toString(2).padStart(16, '0');
+        // Add space every 4 bits for readability
+        const formattedBinary = binaryStr.match(/.{1,4}/g).join(' ');
+
+        html += `
+            <div class="code-char">
+                <span class="char-visual">${escapeHtml(char)}</span>
+                <span class="char-code">${formattedBinary}</span>
+            </div>
+        `;
+    }
+
+    html += '</div>';
+    return html;
+}
+
+function escapeHtml(text) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;',
+        ' ': '&nbsp;'
+    };
+    return text.replace(/[&<>"' ]/g, m => map[m]);
+}
+
+function copyToClipboard() {
+    const codeChars = sentenceResult.querySelectorAll('.char-code');
+    const codes = Array.from(codeChars).map(el => el.textContent).join(' ');
+
+    navigator.clipboard.writeText(codes).then(() => {
+        // Visual feedback
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<span class="btn-icon">✅</span> 복사됨!';
+        copyBtn.style.background = 'var(--success-gradient)';
+        copyBtn.style.borderColor = 'transparent';
+
+        setTimeout(() => {
+            copyBtn.innerHTML = originalText;
+            copyBtn.style.background = '';
+            copyBtn.style.borderColor = '';
+        }, 2000);
+    }).catch(err => {
+        console.error('복사 실패:', err);
+    });
+}
+
+function clearSentence() {
+    sentenceInput.value = '';
+    charCount.textContent = '0';
+    clearSentenceResult();
+    resultActions.style.display = 'none';
+    sentenceInput.focus();
+}
+
+function clearSentenceResult() {
+    sentenceResult.innerHTML = `
+        <div class="empty-state">
+            <span class="empty-icon">💬</span>
+            <p>문장을 입력하면<br>컴퓨터가 보는 코드로 변환됩니다</p>
+        </div>
+    `;
+    sentenceResult.classList.remove('has-content');
 }
 
 // Keyboard shortcuts

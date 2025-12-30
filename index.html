@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +8,12 @@
     <meta name="description" content="문자를 입력하면 ASCII 코드와 유니코드로 자동 변환해주는 교육용 웹사이트">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <header class="header">
@@ -30,14 +34,8 @@
                     <p class="hint">변환하고 싶은 문자를 입력하세요</p>
                 </div>
                 <div class="input-wrapper">
-                    <input 
-                        type="text" 
-                        id="charInput" 
-                        class="char-input" 
-                        placeholder="예: A, 가, 😊"
-                        maxlength="1"
-                        autocomplete="off"
-                    >
+                    <input type="text" id="charInput" class="char-input" placeholder="예: A, 가, 😊" maxlength="1"
+                        autocomplete="off">
                     <button id="clearBtn" class="clear-btn" title="지우기">✕</button>
                 </div>
                 <div class="quick-examples">
@@ -108,13 +106,55 @@
                 </div>
             </section>
 
+            <!-- Sentence Conversion Section -->
+            <section class="sentence-section card">
+                <div class="section-header">
+                    <h2>📝 문장 변환하기</h2>
+                    <p class="hint">문장을 입력하면 컴퓨터가 보는 코드로 변환됩니다</p>
+                </div>
+
+                <div class="sentence-input-wrapper">
+                    <textarea id="sentenceInput" class="sentence-input" placeholder="예: Hello 안녕하세요 😊" rows="3"
+                        maxlength="100"></textarea>
+                    <div class="char-count">
+                        <span id="charCount">0</span> / 100 문자
+                    </div>
+                </div>
+
+                <div class="conversion-modes">
+                    <button class="mode-btn active" data-mode="unicode">유니코드</button>
+                    <button class="mode-btn" data-mode="ascii">ASCII</button>
+                    <button class="mode-btn" data-mode="hex">16진수</button>
+                    <button class="mode-btn" data-mode="binary">2진수</button>
+                </div>
+
+                <div id="sentenceResult" class="sentence-result">
+                    <div class="empty-state">
+                        <span class="empty-icon">💬</span>
+                        <p>문장을 입력하면<br>컴퓨터가 보는 코드로 변환됩니다</p>
+                    </div>
+                </div>
+
+                <div class="result-actions" style="display: none;">
+                    <button id="copyBtn" class="action-btn">
+                        <span class="btn-icon">📋</span>
+                        복사하기
+                    </button>
+                    <button id="clearSentenceBtn" class="action-btn">
+                        <span class="btn-icon">🗑️</span>
+                        지우기
+                    </button>
+                </div>
+            </section>
+
             <!-- Educational Info Section -->
             <section class="education-section">
                 <div class="education-grid">
                     <div class="edu-card card">
                         <div class="edu-icon">📚</div>
                         <h3>ASCII 코드란?</h3>
-                        <p>American Standard Code for Information Interchange의 약자로, 영문 알파벳과 숫자, 특수문자를 0~127 사이의 숫자로 표현하는 방식입니다.</p>
+                        <p>American Standard Code for Information Interchange의 약자로, 영문 알파벳과 숫자, 특수문자를 0~127 사이의 숫자로 표현하는
+                            방식입니다.</p>
                         <ul class="edu-list">
                             <li>총 128개의 문자 표현 가능</li>
                             <li>영어와 기본 기호만 지원</li>
@@ -150,4 +190,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
