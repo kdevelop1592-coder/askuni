@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문자 코드 변환기 - ASCII & Unicode</title>
+    <meta name="description" content="문자를 입력하면 ASCII 코드와 유니코드로 자동 변환해주는 교육용 웹사이트">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">
+                    <span class="icon">🔤</span>
+                    문자 코드 변환기
+                </h1>
+                <p class="subtitle">ASCII 코드와 유니코드를 쉽게 배워보세요!</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Input Section -->
+            <section class="input-section card">
+                <div class="section-header">
+                    <h2>✏️ 문자 입력</h2>
+                    <p class="hint">변환하고 싶은 문자를 입력하세요</p>
+                </div>
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="charInput" 
+                        class="char-input" 
+                        placeholder="예: A, 가, 😊"
+                        maxlength="1"
+                        autocomplete="off"
+                    >
+                    <button id="clearBtn" class="clear-btn" title="지우기">✕</button>
+                </div>
+                <div class="quick-examples">
+                    <span class="example-label">예시:</span>
+                    <button class="example-btn" data-char="A">A</button>
+                    <button class="example-btn" data-char="가">가</button>
+                    <button class="example-btn" data-char="1">1</button>
+                    <button class="example-btn" data-char="!">!</button>
+                    <button class="example-btn" data-char="😊">😊</button>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <div class="results-grid">
+                <!-- ASCII Section -->
+                <section class="result-section card ascii-card">
+                    <div class="section-header">
+                        <h2>📊 ASCII 코드</h2>
+                        <div class="info-badge" data-info="ascii">?</div>
+                    </div>
+                    <div class="result-content">
+                        <div id="asciiResult" class="result-display">
+                            <div class="empty-state">
+                                <span class="empty-icon">💭</span>
+                                <p>문자를 입력하면<br>ASCII 코드가 표시됩니다</p>
+                            </div>
+                        </div>
+                        <div id="asciiDetails" class="details-box"></div>
+                    </div>
+                </section>
+
+                <!-- Unicode Section -->
+                <section class="result-section card unicode-card">
+                    <div class="section-header">
+                        <h2>🌍 유니코드</h2>
+                        <div class="info-badge" data-info="unicode">?</div>
+                    </div>
+                    <div class="result-content">
+                        <div id="unicodeResult" class="result-display">
+                            <div class="empty-state">
+                                <span class="empty-icon">💭</span>
+                                <p>문자를 입력하면<br>유니코드가 표시됩니다</p>
+                            </div>
+                        </div>
+                        <div id="unicodeDetails" class="details-box"></div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Character Info Section -->
+            <section id="charInfoSection" class="char-info-section card" style="display: none;">
+                <div class="section-header">
+                    <h2>📝 문자 정보</h2>
+                </div>
+                <div class="char-info-grid">
+                    <div class="info-item">
+                        <span class="info-label">문자</span>
+                        <span id="charDisplay" class="info-value char-display"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">문자 종류</span>
+                        <span id="charType" class="info-value"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">바이트 크기</span>
+                        <span id="charBytes" class="info-value"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Educational Info Section -->
+            <section class="education-section">
+                <div class="education-grid">
+                    <div class="edu-card card">
+                        <div class="edu-icon">📚</div>
+                        <h3>ASCII 코드란?</h3>
+                        <p>American Standard Code for Information Interchange의 약자로, 영문 알파벳과 숫자, 특수문자를 0~127 사이의 숫자로 표현하는 방식입니다.</p>
+                        <ul class="edu-list">
+                            <li>총 128개의 문자 표현 가능</li>
+                            <li>영어와 기본 기호만 지원</li>
+                            <li>1바이트(8비트) 사용</li>
+                        </ul>
+                    </div>
+                    <div class="edu-card card">
+                        <div class="edu-icon">🌐</div>
+                        <h3>유니코드란?</h3>
+                        <p>전 세계의 모든 문자를 컴퓨터에서 일관되게 표현하고 다룰 수 있도록 만든 국제 표준 문자 코드입니다.</p>
+                        <ul class="edu-list">
+                            <li>전 세계 모든 언어 지원</li>
+                            <li>이모지도 포함</li>
+                            <li>1~4바이트 가변 길이</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>💡 중학교 정보 교육용 자료 | 문자 인코딩의 원리를 배워보세요</p>
+        </footer>
+    </div>
+
+    <!-- Info Modal -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <div id="modalBody" class="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
